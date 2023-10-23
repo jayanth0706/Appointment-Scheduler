@@ -1,0 +1,72 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class Appointment {
+    String title;
+    String date;
+    String time;
+
+    public Appointment(String title, String date, String time) {
+        this.title = title;
+        this.date = date;
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + " Date: " + date + " Time: " + time;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Queue<Appointment> appointmentQueue = new LinkedList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Appointment Scheduler Menu:");
+            System.out.println("1. Schedule an appointment");
+            System.out.println("2. View upcoming appointments");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the title of the appointment: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter the date (e.g., 2023-10-13): ");
+                    String date = scanner.nextLine();
+                    System.out.print("Enter the time (e.g., 14:00): ");
+                    String time = scanner.nextLine();
+
+                    Appointment newAppointment = new Appointment(title, date, time);
+                    appointmentQueue.offer(newAppointment);
+                    System.out.println("Appointment scheduled: " + newAppointment);
+                    break;
+
+                case 2:
+                    if (appointmentQueue.isEmpty()) {
+                        System.out.println("No upcoming appointments.");
+                    } else {
+                        System.out.println("Upcoming Appointments:");
+                        for (Appointment appointment : appointmentQueue) {
+                            System.out.println(appointment);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Exiting the Appointment Scheduler.");
+                    scanner.close();
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice. Please select a valid option.");
+            }
+        }
+    }
+}
